@@ -36,5 +36,8 @@
 	
 	<!-- Component scan 설정 추가 -->
     <context:component-scan base-package="org.zerock.sample" />
+    
+    <!-- org.zerock.service 패키지의 컴포넌트를 스캔하는 설정 -->
+	<context:component-scan base-package="org.zerock.service" />
 	
 </beans>
