@@ -50,6 +50,13 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
+		<!-- Spring Test 의존성 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
