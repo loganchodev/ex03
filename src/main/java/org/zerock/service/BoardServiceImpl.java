@@ -30,7 +30,6 @@ public class BoardServiceImpl implements BoardService{
 	    return mapper.read(bno); // BoardMapper 인터페이스의 read 메서드를 호출하여 특정 번호(bno)의 게시물 정보를 조회하고, 조회된 BoardVO 객체 반환
 	}
 
-
 	@Override
 	public boolean modify(BoardVO board) {
 	    log.info("modify.... " + board);

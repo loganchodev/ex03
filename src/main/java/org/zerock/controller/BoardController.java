@@ -16,11 +16,11 @@ import lombok.extern.log4j.Log4j;
 public class BoardController {
         
 	// @Autowired // 스프링의 의존성 주입 어노테이션, 현재는 Lombok으로 대체되어 비활성화 상태
-    private final BoardService boardservice; // 게시판 서비스 의존성 주입
+    private final BoardService boardService; // 게시판 서비스 의존성 주입
     @GetMapping("/list") // '/list' 경로로 GET 요청을 처리
     public void list(Model model) { // 모델에 데이터를 추가하여 뷰로 전달
         log.info("list..............."); // 리스트 로깅
-        model.addAttribute("list", boardservice.getList()); // 게시판 목록을 모델에 추가
+        model.addAttribute("list", boardService.getList()); // 게시판 목록을 모델에 추가
     }
         
 }

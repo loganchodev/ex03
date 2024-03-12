@@ -14,8 +14,7 @@
 	<logger name="org.zerock.controller">
 		<level value="info" />
 	</logger>
-	
-	
+		
 	<!-- 추가내용 -->
 	<logger name="jdbc.audit">
 		<level value="warn" />
