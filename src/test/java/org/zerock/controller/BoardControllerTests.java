@@ -41,5 +41,22 @@ public class BoardControllerTests {
 		    			.getModelAndView() // ModelAndView 객체 반환
 		    			.getModelMap());	// ModelMap 객체 반환하여 로그 출력
 	}
+	
+	@Test // JUnit에서 제공하는 테스트 어노테이션
+	public void testRegister() throws Exception{
+	    
+	    // MockMvc를 사용하여 /board/register 경로로 POST 요청을 보냄
+	    // 게시글 등록을 위해 title, content, writer 파라미터를 포함시킴
+	    String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/board/register")
+	                               .param("title", "title.....") // title 파라미터 추가
+	                               .param("content", "content.....") // content 파라미터 추가
+	                               .param("writer", "writer.....")) // writer 파라미터 추가
+	                               .andReturn() // 요청의 반환값을 받음
+	                               .getModelAndView() // ModelAndView 객체를 가져옴
+	                               .getViewName(); // 뷰 이름을 가져옴
+	                                   
+	    log.info(resultPage); // 결과 페이지의 뷰 이름을 로그로 출력
+	}
 
+    
 }
