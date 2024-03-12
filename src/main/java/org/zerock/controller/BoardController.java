@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
 import org.zerock.service.BoardService;
@@ -43,5 +44,27 @@ public class BoardController {
         rttr.addFlashAttribute("result", vo.getBno()); // RedirectAttributes를 사용하여 등록된 게시물의 번호 전달
         return "redirect:/board/list"; // 게시물 목록 페이지로 리다이렉트
     }
+        
+    @GetMapping("/get") // '/get' 경로에 대한 GET 요청을 처리하는 메소드
+    public void testget(@RequestParam("bno") Long bno, Model model) {
+        log.info("/get : " + bno); // 요청받은 게시글 번호를 로깅
+
+        BoardVO vo = boardservice.get(bno); // 요청받은 번호에 해당하는 게시글 정보를 조회
+        
+        log.info(vo); // 조회된 게시글 정보를 로깅
+        
+        model.addAttribute("board", boardservice.get(bno)); // 조회된 게시글 정보를 모델에 추가. 뷰에서 사용할 수 있도록 함
+    }
+    
+    @PostMapping("/modify") // '/modify' 경로에 대한 POST 요청을 처리하는 메서드
+    public String modify(BoardVO board, RedirectAttributes rttr) {
+        log.info("modify:" + board); // 수정 작업 로그 기록. board 객체의 정보를 출력
+        
+        if(boardservice.modify(board)) { // boardservice의 modify 메서드를 호출하여 게시물 수정 시도
+            rttr.addFlashAttribute("result", "success"); // 수정이 성공하면, 리다이렉트 시 'result'라는 이름으로 'success' 메시지 전달
+        }
+        return "redirect:/board/list"; // 수정 작업 후 게시물 목록 페이지로 리다이렉션
+    }
+
     
 }
