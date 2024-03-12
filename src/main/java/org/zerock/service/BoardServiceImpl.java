@@ -26,25 +26,27 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public BoardVO get(Long bno) {
-		// 특정 게시물 조회 기능 구현 예정
-		return null;
+	    log.info("get....." + bno); // 특정 게시물 조회 로그 출력, 조회하려는 게시물 번호(bno) 포함
+	    return mapper.read(bno); // BoardMapper 인터페이스의 read 메서드를 호출하여 특정 번호(bno)의 게시물 정보를 조회하고, 조회된 BoardVO 객체 반환
 	}
+
 
 	@Override
 	public boolean modify(BoardVO board) {
-		// 게시물 수정 기능 구현 예정
-		return false;
+	    log.info("modify.... " + board);
+	    return mapper.update(board)==1;
 	}
 
 	@Override
 	public boolean remove(Long bno) {
-		// 게시물 삭제 기능 구현 예정
-		return false;
+		log.info("remove...." + bno);
+	    return mapper.delete(bno)==1;
 	}
-
+	
 	@Override
 	public List<BoardVO> getList() {
-		// 게시물 목록 조회 기능 구현 예정
-		return null;
-	}
+	    log.info("getList....."); // getList 메서드 호출 시 로깅
+	    return mapper.getList(); // BoardMapper 인터페이스의 getList 메서드를 호출하여 게시글 목록을 조회하고 반환
+	}	
+
 }
