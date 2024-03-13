@@ -19,7 +19,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller // 이 클래스를 웹 요청을 처리하는 컨트롤러로 등록
 @Log4j // 로깅을 위한 Lombok 어노테이션
-@RequestMapping("/board") // 이 컨트롤러의 기본 경로 설정
+@RequestMapping("/board/*") // 이 컨트롤러의 기본 경로 설정
 @RequiredArgsConstructor // final 또는 @NonNull 필드에 대한 생성자 자동 생성(Lombok)
 public class BoardController {
 
@@ -66,5 +66,13 @@ public class BoardController {
         return "redirect:/board/list"; // 수정 작업 후 게시물 목록 페이지로 리다이렉션
     }
 
-    
+    @PostMapping("/remove")
+    public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr ) {
+   	    log.info("remove...." +bno);
+   	   
+   	    if(boardservice.remove(bno)) {
+   	    	rttr.addFlashAttribute("result", "success");
+   	    }
+   	    return "redirect:/board/list";
+    }
 }
