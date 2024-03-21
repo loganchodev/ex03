@@ -10,6 +10,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">Board List Page</h1>
+			
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
@@ -17,12 +18,9 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">
-					Board List Page
-					<button id='regBtn' type="button"
-						class="btn btn-xs pull-right btn-info">Register New Board</button>
+				<div class="panel-heading">Board List Page
+					<button id='regBtn' type="button" class="btn btn-xs pull-right">Register New Board</button>
 				</div>
-
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 					<table width="100%"
@@ -40,8 +38,8 @@
 						<c:forEach items="${list}" var="board">
 							<tr>
 								<td><c:out value="${board.bno}" /></td>
-								<td><a href='/board/get?bno=${board.bno}'>
-										${board.title}</a></td>
+								<td><a href='/board/get?bno=<c:out value="${board.bno}"/>'>
+								<c:out value="${board.title}" /></a></td>
 								<td><c:out value="${board.writer}" /></td>
 								<td><fmt:formatDate pattern="yyyy-MM-dd"
 										value="${board.regDate}" /></td>
@@ -49,31 +47,49 @@
 										value="${board.updateDate}" /></td>
 							</tr>
 						</c:forEach>
-						
 					</table>
-					<!-- The Modal -->
+					<div class='pull-right'>
+						<ul class="pagination">
+							<c:if test="${pageMaker.prev }">
+								<li class="paginate_button previous"><a href="${pageMaker.startPage -1} }">Previous</a></li>
+							</c:if>
+							
+							<c:forEach begin="${pageMaker.startPage}"
+								end="${pageMaker.endPage}" var="num">
+								<li class="page-item ${pageMaker.cri.pageNum == num ? "active" : "" }">
+								<a class="page-link" href="${num }">${num}</a></li>
+							</c:forEach>
+
+							<c:if test="${pageMaker.next }">
+								<li class="paginate_button next"><a href="#=${pageMaker.endPage +1 }">Next</a></li>
+							</c:if>
+						</ul>
+					</div>
+					<h3>${pageMaker}</h3>						
+					<!-- 모달시작 -->
 					<div class="modal" tabindex="-1" id="myModal" role="dialog">
 						<div class="modal-dialog">
 							<div class="modal-content">
-
-								<!-- Modal Header -->
 								<div class="modal-header">
-									<h4 class="modal-title">Modal Heading</h4>
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h5 class="modal-title">Modal title</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
 								</div>
-								<!-- Modal body -->
-								<div class="modal-body">처리가 완료되었습니다.</div>
-
-								<!-- Modal footer -->
+								<div class="modal-body">
+									<p>처리가 완료되었습니다.</p>
+								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default"
 										data-dismiss="modal">Close</button>
+									<button type="button" class="btn btn-primary">Save
+										changes</button>
 								</div>
 							</div>
 						</div>
-						<!-- end Modal -->
 					</div>
-					<!-- /.panel-body -->
+					<!-- 모달종료 -->	
+				</div>
+				<!-- /.panel-body -->
 			</div>
 			<!-- /.panel -->
 		</div>
@@ -83,21 +99,25 @@
 
 </div>
 <!-- /#page-wrapper -->
-
 </div>
 <!-- /#wrapper -->
 <script>
 	$(document).ready(function(){
+		
 		let result = '<c:out value="${result}"/>';
 		
 		checkModal(result);
 		
+		history.replaceState({}, null, null); //히스토리 삭제
+		
 		function checkModal(result){
-			if(result === ''){
-				return
+			
+			if(result ==='' || history.state){
+				return;	
 			}
+			
 			if(parseInt(result) > 0){
-				$(".modal-body").html("게시글 " + parseInt(result) + "번이 등록되었습니다.")
+				$(".modal-body").html("게시글 " + parseInt(result) + " 번이 등록되었습니다.");	
 			}
 			
 			$("#myModal").modal("show");
@@ -105,11 +125,23 @@
 		}
 		
 		$("#regBtn").on("click", function(){
-			self.location = '/board/register';
+			
+			self.location="/board/register";
 		});
 		
+		$(".page-link").on("click", function(e){
+			e.preventDefault();
+			
+			var targetPage = $(this).attr("href");
+			console.log(targetPage);
+		})
+		
+		
 	});
-	
-
 </script>
+
+
+
+
+
 <%@include file = "../includes/footer.jsp" %>

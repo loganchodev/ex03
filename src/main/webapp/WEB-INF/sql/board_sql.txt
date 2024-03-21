@@ -20,3 +20,64 @@ values(SEQ_BOARD.nextval, '텍스트 제목', '텍스트 내용', 'user00');
 select * from tbl_board;
 
 commit;
+
+
+select * from tbl_board order by bno desc;
+
+insert into tbl_board(bno, title, content, writer)
+(select seq_board.nextval, title, content, writer from tbl_board);
+
+select * from tbl_board order by bno desc;
+
+
+select 
+    /*+ INDEX_DESC(tbl_board pk_board) */
+    *
+    from tbl_board
+    where bno > 0;
+    
+select /*+ FULL(tbl_board) */  *
+from tbl_board order by bno desc;    
+
+
+select /*+ INDEX_DESC(tbl_board pk_board) */ 
+    rownum rn, bno, title, content
+from tbl_board;
+
+
+
+select /*+ INDEX_DESC(tbl_board pk_board) */ 
+    rownum rn, bno, title, content
+from tbl_board
+where rownum <=10;
+
+select /*+ INDEX_DESC(tbl_board pk_board) */ 
+    rownum rn, bno, title, content
+from tbl_board
+where rownum >10 and rownum <= 20;
+
+select /*+ INDEX_DESC(tbl_board pk_board) */ 
+    rownum rn, bno, title, content
+from tbl_board
+where rownum <= 20;
+
+select
+   bno, title, content
+from(   
+    select /*+ INDEX_DESC(tbl_board pk_board) */ 
+        rownum rn, bno, title, content
+    from tbl_board
+    where rownum <= 20
+    )
+where rn > 10;    
+
+	select
+    	  bno, title, content, writer, regDate, updateDate
+    	from(
+    		 select /*+ INDEX_DESC(tbl_board pk_board) */ 
+        		rownum rn, bno, title, content, writer, regDate, updateDate
+    	  	 from
+    	  	    tbl_board
+    		 where rownum <= 20
+    	) where rn > 10;
+commit;

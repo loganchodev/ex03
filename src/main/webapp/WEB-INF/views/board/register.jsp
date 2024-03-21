@@ -31,8 +31,9 @@
 						<div class="form-group">
 							<label>Writer</label> <input class="form-control" name="writer">
 						</div>
-						<button data-oper='modify' class="btn btn-default">Modify</button>
-						<button data-oper=list' class="btn btn-default">List</button>
+						<button type="submit" class="btn btn-default">Submit
+							Button</button>
+						<button type="reset" class="btn btn-default">Reset Button</button>
 
 					</form>
 				</div>
@@ -47,10 +48,13 @@
 </div>
 <!-- /#wrapper -->
 <script>
-window.onpageshow = function(event) {
-    if (event.persisted) {
-        location.reload(true); 
-    }
+	window.onpageshow = function(event) {
+	//back 이벤트 일 경우
+	if (event.persisted) {
+		location.reload(true);
+	}
 }
-</script>
+</script> 
+
+
 <%@include file = "../includes/footer.jsp" %>

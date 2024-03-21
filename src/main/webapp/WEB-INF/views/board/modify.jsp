@@ -1,85 +1,102 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+    pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%@include file="../includes/header.jsp"%>
+<%@include file = "../includes/header.jsp" %>
 
-<div class="row">
-	<div class="col-lg-12">
-		<h1 class="page-header">Board Modify</h1>
+<div id="page-wrapper">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">Board Modify page</h1>
+		</div>
+		<!-- /.col-lg-12 -->
 	</div>
-</div>
-
-<!-- /.row -->
-<div class="row">
-	<div class="col-lg-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">Board Modify</div>
-			<!-- /.panel-heading -->
-			<div class="panel-body">
-				<form role="form" action="/board/modify" method="post">
+	<!-- /.row -->
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">Board Modify page</div>
+				<!-- /.panel-heading -->
+				<div class="panel-body">
+				
+				<form>
 					<div class="form-group">
-						<label>Bno</label> <input class="form-control" name='bno'
-							value=${board.bno } readonly="readonly">
+						<label>Bno</label> <input class="form-control" name="bno"
+						 value='<c:out value="${board.bno}"/>' readonly="readonly">
 					</div>
-
 					<div class="form-group">
-						<label>Title</label> <input class="form-control" name='title'
-							value=${board.title} >
+						<label>Title</label> <input class="form-control" name="title"
+						value='<c:out value="${board.title}"/>'>
 					</div>
-
 					<div class="form-group">
 						<label>Text area</label>
-						<textarea class="form-control" rows="3" name='content'>${board.content}</textarea>
+			<textarea class="form-control"  row="3" name="content"><c:out value="${board.content}"/></textarea>
 					</div>
-
 					<div class="form-group">
-						<label>Writer</label> <input class="form-control" name='writer'
-							value=${board.writer } readonly="readonly">
+						<label>Writer</label> <input class="form-control" name="writer"
+						value='<c:out value="${board.writer}"/>' readonly="readonly">
 					</div>
-
+					
+					<div class="form-group">
+						<label>regDate</label>
+						<input class="form-control" name="regDate"
+						value='<fmt:formatDate pattern ="yyyy/MM/dd"
+						value="${board.regDate}" />' readonly="readonly">
+					</div>
+					
+					<div class="form-group">
+						<label>update Date</label>
+						<input class="form-control" name="updateDate"
+						value='<fmt:formatDate pattern ="yyyy/MM/dd"
+						value="${board.updateDate}"/>' readonly="readonly">
+					</div>
+					
 					<button type="submit" data-oper='modify' class="btn btn-default">Modify</button>
 					<button type="submit" data-oper='remove' class="btn btn-danger">Remove</button>
-					<button type="submit" data-oper='list' class="btn btn-info">List</button>
-
+					<button type="submit" data-oper='list' class="btn btn-info">List</button>	
 				</form>
+
+				</div>
+				<!-- /.panel-body -->
 			</div>
-			<!-- /.panel-body -->
+			<!-- /.panel -->
 		</div>
-		<!-- /.panel -->
+		<!-- /.col-lg-6 -->
 	</div>
-	<!-- /.col-lg-12 -->
+	<!-- /.row -->
+
 </div>
-<!-- /.row -->
-</div>
-<!-- /#page-wrapper -->
+<!-- /#wrapper -->
 
 
-<script type="text/javascript">
-$(document).ready(function() {
-	var formObj = $("form");
-	
-	$("button").on("click",function(e){
-		e.preventDefault();
+<script>
+
+	$(document).ready(function(){
 		
-		var operation = $(this).data("oper");
+		var formObj = $("form");
 		
-		console.log(operation);
-		
-		if(operation === 'remove'){
-			formObj.attr("action", "/board/remove");
-		}else if(operation === 'list'){
-			self.location = "/board/list";
-			return;
-		}
-		
-		formObj.submit();
-		
-	});
-	
-});
-</script>
+		$('button').on("click", function(e){
+			
+			e.preventDefault();
+			
+			var operation = $(this).data("oper");
+			
+			if(operation === 'list'){
+				self.location = "/board/list"
+				return
+			}else if(operation ==='remove'){
+				formObj.attr("action", "/board/remove")
+					.attr("method", "post");
+			}else if(operation ==='modify'){
+				formObj.attr("action", "/board/modify")
+					.attr("method", "post");
+			}
+			formObj.submit();
+		});
+	});	
+</script> 
 
 
-<%@include file="../includes/footer.jsp"%>
+<%@include file = "../includes/footer.jsp" %>
