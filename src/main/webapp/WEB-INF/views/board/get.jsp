@@ -38,12 +38,33 @@
 						<label>Writer</label> <input class="form-control" name="writer"
 						value='<c:out value="${board.writer}"/>' readonly="readonly">
 					</div>
-					<button data-oper='modify' class="btn btn-default"
-					 onclick="location.href='/board/modify?bno=<c:out value="${board.bno}"/>'">	
-					 Modify</button>
-					<button data-oper='list' class="btn btn-default"
-					 onclick="location.href='/board/list'">							
-					 List</button>
+					
+					<form id ='actionForm' action="/board/list" method='get'>
+						<input type='hidden' name='pageNum' value='${cri.pageNum}'>
+						<input type='hidden' name='amount' value='${cri.amount}'>
+						<input type='hidden' name='bno' value='${board.bno}'>
+					</form>
+					
+					<button type="button" class="btn btn-default listBtn">
+					<a href='/board/list'>List</a></button>
+					<button type="button" class="btn btn-default modBtn">
+					<a href='/board/modify?bno=<c:out value="${board.bno}"/>'>Modify</a></button>
+					
+					<script>
+						var actionForm = $("#actionForm");
+						
+						$(".listBtn").click(function(e){
+							e.preventDefault();
+							actionForm.submit();
+						});
+						
+						$(".modBtn").click(function(e){
+							e.preventDefault();
+							actionForm.attr("action", "/board/modify");
+							actionForm.submit();
+						});						
+					</script>
+					
 
 				</div>
 				<!-- /.panel-body -->
